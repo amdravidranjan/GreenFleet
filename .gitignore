@@ -1,0 +1,11 @@
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.venv/
+backend/cache/
+demo/build/
+demo/shots/
+*.log
+.DS_Store
+.vite/

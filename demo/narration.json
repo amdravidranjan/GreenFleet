@@ -1,0 +1,192 @@
+{
+ "voice": "en-US-AndrewMultilingualNeural",
+ "rate": "+2%",
+ "lead": 0.6,
+ "tail": 0.9,
+ "scenes": [
+  {
+   "id": "intro",
+   "text": "Shipping carries most of the world's trade, and about three percent of its greenhouse gases. Meet GreenFleet Q: a quantum-inspired co-pilot that predicts every ship's fuel, and plans the whole fleet for less fuel, less cost and less carbon. Built by team Cup Of Tea, for Smart India Hackathon 2026.",
+   "marks": {}
+  },
+  {
+   "id": "fleet",
+   "text": "This is a simulated fleet of forty ships, sailing seven routes out of Chennai. Run the usual way, with fixed speeds and fossil fuels, it emits about one point four million tonnes of CO2 a year, and costs 413 million dollars. Under the 2030 rules, twenty-seven of its ships would be rated D or E. That means failing.",
+   "marks": {
+    "fleet:kpis": [
+     "emits",
+     1
+    ],
+    "fleet:flag-de": [
+     "twenty-seven",
+     1
+    ]
+   }
+  },
+  {
+   "id": "predict",
+   "text": "Step one: predict fuel, honestly. Our model starts from ship physics. Then a quantum kernel, an eight-qubit circuit simulated on an ordinary laptop, learns what physics misses. Watch the sea get rough. Speed, waves and a dirty hull push this ship from sixty-four to a hundred and sixty-three tonnes of fuel a day. Every forecast comes with a ninety percent range, and a reason for each extra tonne. Average error is under three percent: level with the best classical kernel, and ahead of gradient boosting and random forests.",
+   "marks": {
+    "predict:conditions": [
+     "Watch",
+     1
+    ],
+    "predict:band": [
+     "ninety",
+     1
+    ],
+    "predict:explain": [
+     "reason",
+     1
+    ],
+    "predict:models": [
+     "Average",
+     1
+    ]
+   }
+  },
+  {
+   "id": "quantum",
+   "text": "Step two: decide. Every ship's route, speed, fuel and shore-power choice is written into ten qubits. Four hundred for the fleet. Each one starts in superposition, open to every option. As the search evaluates thousands of fleet plans, the best ones rotate the qubits, until each register collapses onto a single choice. You are watching every ship's fuel being decided.",
+   "marks": {
+    "quantum:search": [
+     "As",
+     1
+    ],
+    "quantum:collapsed": [
+     "watching",
+     1
+    ]
+   }
+  },
+  {
+   "id": "pareto",
+   "text": "Instead of one answer, GreenFleet Q returns a menu of best trade-offs. The cheapest plan. The greenest plan. And a balanced plan: sixty-six percent less CO2, and nine percent cheaper than today.",
+   "marks": {
+    "pareto:cheapest": [
+     "cheapest",
+     1
+    ],
+    "pareto:greenest": [
+     "greenest",
+     1
+    ],
+    "pareto:balanced": [
+     "balanced",
+     1
+    ]
+   }
+  },
+  {
+   "id": "twin",
+   "text": "Here is that balanced plan on a digital twin. Today on the left. GreenFleet Q on the right. Watch the counters. Ships ease their speed, switch to LNG, bio-LNG, e-methanol, green ammonia and hydrogen where those fuels can be bunkered, and plug into shore power in port. And every trading ship is now rated A or B.",
+   "marks": {
+    "twin:counters": [
+     "Watch",
+     1
+    ],
+    "twin:cii": [
+     "every",
+     1
+    ]
+   }
+  },
+  {
+   "id": "time",
+   "text": "Carbon prices and green targets change every year, so we built a time machine. As we travel from 2025 to 2050, the fleet is re-planned for each year's rules and prices. Green ammonia overtakes LNG by 2028, and by 2050, emissions are down eighty-seven percent, while costs are thirty-one percent lower than doing nothing.",
+   "marks": {
+    "time:start": [
+     "travel",
+     1
+    ],
+    "time:2050": [
+     "emissions",
+     1
+    ]
+   }
+  },
+  {
+   "id": "genealogy",
+   "text": "But green on paper is not always green. Fuel genealogy traces every fuel from its source to the exhaust. Grey ammonia, made from natural gas, scores an A under today's rating, because its exhaust contains no carbon. Over its full life cycle, it emits a hundred and twenty-six grams per megajoule. That's more than ship diesel. GreenFleet Q optimises the full life cycle, so that loophole can't fool it.",
+   "marks": {
+    "genealogy:greenwash": [
+     "Grey",
+     1
+    ]
+   }
+  },
+  {
+   "id": "storm",
+   "text": "Now, a cyclone forms in the Bay of Bengal. The predictor flags five routes in its path: twenty-five ships would burn fourteen percent more fuel on the old plan. GreenFleet Q re-plans all four hundred qubits in under two seconds. Ships slow down in heavy seas, and cargo and schedules still hold.",
+   "marks": {
+    "storm:detected": [
+     "cyclone",
+     1
+    ],
+    "storm:forecast": [
+     "predictor",
+     1
+    ],
+    "storm:replanning": [
+     "re-plans",
+     1
+    ],
+    "storm:new-plan": [
+     "Ships",
+     2
+    ]
+   }
+  },
+  {
+   "id": "ask",
+   "text": "Fleet managers don't need to speak optimisation. They can simply ask. The assistant turns the question into rules, and runs the engine. Seconds later, it answers with a plan: hydrogen on the short coastal runs, green ammonia on the long ones, and slower, steadier speeds. Every ship stays at A or B, and the numbers come with it.",
+   "marks": {
+    "ask:typing": [
+     "Fleet",
+     1
+    ],
+    "ask:constraints": [
+     "turns",
+     1
+    ],
+    "ask:answer": [
+     "answers",
+     1
+    ]
+   },
+   "tail": 2.0
+  },
+  {
+   "id": "outro",
+   "text": "Predict. Optimise. Simulate. Act. GreenFleet Q: quantum-inspired today, ready for quantum hardware tomorrow. Thank you, from team Cup Of Tea.",
+   "marks": {
+    "outro:w1": [
+     "Predict",
+     1
+    ],
+    "outro:w2": [
+     "Optimise",
+     1
+    ],
+    "outro:w3": [
+     "Simulate",
+     1
+    ],
+    "outro:w4": [
+     "Act",
+     1
+    ],
+    "outro:stats": [
+     "quantum-inspired",
+     1
+    ]
+   },
+   "tail": 2.5
+  }
+ ],
+ "display": {
+  "GreenFleet Q": "GreenFleet-Q",
+  "CO2": "CO₂",
+  "Optimise": "Optimise"
+ }
+}
