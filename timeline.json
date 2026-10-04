@@ -1,0 +1,108 @@
+{
+ "scenes": [
+  {
+   "id": "intro",
+   "dur": 21.61,
+   "speech_at": 0.6,
+   "marks": {}
+  },
+  {
+   "id": "fleet",
+   "dur": 23.203,
+   "speech_at": 0.6,
+   "marks": {
+    "fleet:kpis": 10.012,
+    "fleet:flag-de": 17.769
+   }
+  },
+  {
+   "id": "predict",
+   "dur": 35.924,
+   "speech_at": 0.6,
+   "marks": {
+    "predict:conditions": 13.039,
+    "predict:band": 23.002,
+    "predict:explain": 24.767,
+    "predict:models": 27.107
+   }
+  },
+  {
+   "id": "quantum",
+   "dur": 26.304,
+   "speech_at": 0.6,
+   "marks": {
+    "quantum:search": 13.529,
+    "quantum:collapsed": 22.965
+   }
+  },
+  {
+   "id": "pareto",
+   "dur": 15.25,
+   "speech_at": 0.6,
+   "marks": {
+    "pareto:cheapest": 5.845,
+    "pareto:greenest": 7.058,
+    "pareto:balanced": 8.517
+   }
+  },
+  {
+   "id": "twin",
+   "dur": 22.615,
+   "speech_at": 0.6,
+   "marks": {
+    "twin:counters": 6.74,
+    "twin:cii": 18.786
+   }
+  },
+  {
+   "id": "time",
+   "dur": 23.89,
+   "speech_at": 0.6,
+   "marks": {
+    "time:start": 5.955,
+    "time:2050": 17.426
+   }
+  },
+  {
+   "id": "genealogy",
+   "dur": 27.48,
+   "speech_at": 0.6,
+   "marks": {
+    "genealogy:greenwash": 8.529
+   }
+  },
+  {
+   "id": "storm",
+   "dur": 21.267,
+   "speech_at": 0.6,
+   "marks": {
+    "storm:detected": 1.249,
+    "storm:forecast": 3.541,
+    "storm:replanning": 11.936,
+    "storm:new-plan": 16.029
+   }
+  },
+  {
+   "id": "ask",
+   "dur": 23.825,
+   "speech_at": 0.6,
+   "marks": {
+    "ask:typing": 0.735,
+    "ask:constraints": 5.661,
+    "ask:answer": 10.502
+   }
+  },
+  {
+   "id": "outro",
+   "dur": 13.86,
+   "speech_at": 0.6,
+   "marks": {
+    "outro:w1": 0.698,
+    "outro:w2": 1.482,
+    "outro:w3": 2.549,
+    "outro:w4": 3.504,
+    "outro:stats": 5.416
+   }
+  }
+ ]
+}
