@@ -8,6 +8,9 @@ speed, fuel (VLSFO, LNG, bio-LNG, methanol, e-methanol, grey/green ammonia, hydr
 power — to cut fuel, cost and lifecycle (well-to-wake) emissions while meeting cargo demand,
 schedules and the CII / EU ETS / FuelEU / IMO Net-Zero rules.
 
+🌐 **Live demo:** https://greenfleet-q.vercel.app — mirror: https://amdravidranjan.me/GreenFleet/ (press **▶ Guided tour**)
+📄 **Features:** [docs/FEATURES.md](docs/FEATURES.md) · **Research notes:** [docs/RESEARCH.md](docs/RESEARCH.md)
+
 ▶ **Demo video:** [`demo/GreenFleet-Q_demo.mp4`](demo/GreenFleet-Q_demo.mp4) (subtitles: [`demo/GreenFleet-Q_demo.srt`](demo/GreenFleet-Q_demo.srt))
 
 > **About the numbers.** The demo is a *simulated* scenario: a 40-ship, 7-route fleet out of

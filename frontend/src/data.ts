@@ -14,10 +14,8 @@ export type Demo = any;
 
 export const CII_COLORS: Record<string, string> = { A: "#3fb8af", B: "#7fd6b4", C: "#c9d86b", D: "#ffb547", E: "#ff5d5d" };
 
-export async function loadDemo(): Promise<Demo> {
-  const r = await fetch("/demo-data.json");
-  return r.json();
-}
+/** Resolve a file in public/ relative to the page, so the site works under any sub-path (e.g. GitHub Pages). */
+export const asset = (p: string) => new URL(p, document.baseURI).href;
 
 export function fuelColor(d: Demo, key: string | null): string {
   if (!key) return "#556677";

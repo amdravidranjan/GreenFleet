@@ -34,6 +34,9 @@ button:focus-visible { outline: 2px solid var(--chart); outline-offset: 2px; }
 .nav { display: flex; gap: 6px; }
 .nav button { background: none; border: 1px solid transparent; border-radius: 4px; padding: 6px 12px; font-size: 15px; color: var(--mist); cursor: pointer; }
 .nav button.on { color: var(--fog); border-color: var(--chart); background: rgba(63,184,175,.12); }
+.tour { margin-left: auto; background: var(--chart); color: var(--abyss); border: 0; border-radius: 4px; padding: 8px 16px;
+  font-weight: 700; font-size: 15px; cursor: pointer; white-space: nowrap; }
+.tour + .year { margin-left: 18px; }
 .year { margin-left: auto; font-family: var(--display); font-size: 22px; color: var(--mist); }
 .year strong { color: var(--fog); font-size: 28px; margin-left: 6px; }
 

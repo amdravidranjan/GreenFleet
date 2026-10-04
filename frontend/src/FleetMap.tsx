@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DeckGL from "@deck.gl/react";
-import { PathLayer, ScatterplotLayer, TextLayer } from "@deck.gl/layers";
+import { GeoJsonLayer, PathLayer, ScatterplotLayer, TextLayer } from "@deck.gl/layers";
 import { Map } from "react-map-gl/maplibre";
+import { setWorkerUrl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { type Demo, type Plan, fuelColor, shipPos } from "./data";
+import { type Demo, type Plan, asset, fuelColor, shipPos } from "./data";
 
-const STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json";
+// CARTO Dark Matter (no labels) style, bundled so the page does not depend on fetching it at load.
+const STYLE = asset("map-style.json");
+if (import.meta.env.PROD) setWorkerUrl(asset("maplibre/maplibre-gl-worker.mjs")); // copied by vite.config.ts
 
 const hex = (h: string, a = 255): [number, number, number, number] =>
   [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16), a];
@@ -25,6 +28,10 @@ function recolor(e: any) {
   (window as any).__mapReady = ((window as any).__mapReady || 0) + 1;
 }
 
+// If the CARTO basemap cannot be reached, draw Natural Earth 1:50m land ourselves instead.
+let landPromise: Promise<any> | null = null;
+const loadLand = () => (landPromise ??= fetch(asset("land-50m.geojson")).then((r) => r.json()));
+
 export type MapProps = {
   d: Demo; plan: Plan; hours: number; mode: "bau" | "opt";
   view?: { longitude: number; latitude: number; zoom: number };
@@ -35,6 +42,10 @@ export type MapProps = {
 
 export default function FleetMap({ d, plan, hours, mode, view, flagBad = 0, storm, hideShips }: MapProps) {
   const vs = view ?? { longitude: 82.5, latitude: 11.5, zoom: 3.55 };
+  const [basemapFailed, setBasemapFailed] = useState(false);
+  const [land, setLand] = useState<any>(null);
+  useEffect(() => { if (basemapFailed) loadLand().then(setLand); }, [basemapFailed]);
+  const onMapError = () => { setBasemapFailed(true); (window as any).__mapReady = ((window as any).__mapReady || 0) + 1; };
   const ports = useMemo(() => {
     const out: any[] = [{ name: "Chennai", pos: d.routes[0].path[0], hub: true }];
     for (const r of d.routes) out.push({ name: r.dest, pos: r.path[r.path.length - 1] });
@@ -52,6 +63,8 @@ export default function FleetMap({ d, plan, hours, mode, view, flagBad = 0, stor
 
   const stormRoutes = new Set(storm?.routes ?? []);
   const layers: any[] = [
+    ...(land ? [new GeoJsonLayer({ id: "land", data: land, filled: true, stroked: true, getFillColor: hex("#173958"),
+      getLineColor: hex("#2c5476"), lineWidthUnits: "pixels", getLineWidth: 1 })] : []),
     new PathLayer({
       id: "routes", data: d.routes, getPath: (r: any) => r.path, widthUnits: "pixels",
       getWidth: (r: any) => (stormRoutes.has(r.key) ? 3.5 : 2),
@@ -97,7 +110,7 @@ export default function FleetMap({ d, plan, hours, mode, view, flagBad = 0, stor
 
   return (
     <DeckGL viewState={vs as any} controller={false} layers={layers} style={{ position: "absolute", inset: "0" }}>
-      <Map mapStyle={STYLE} onLoad={recolor} attributionControl={false} />
+      <Map mapStyle={STYLE} onLoad={recolor} onError={onMapError} attributionControl={false} />
     </DeckGL>
   );
 }

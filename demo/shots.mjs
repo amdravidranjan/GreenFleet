@@ -12,7 +12,7 @@ const browser = await chromium.launch({ executablePath: CHROME, headless: false,
 const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
 page.on("console", (m) => { if (m.text().startsWith("[DEMO]") || m.type() === "error") console.log(m.type(), m.text().slice(0, 200)); });
 page.on("pageerror", (e) => console.log("PAGEERROR", e.message));
-await page.goto("http://localhost:5173/", { waitUntil: "networkidle" });
+await page.goto(process.env.SHOTS_URL ?? "http://localhost:5173/", { waitUntil: "networkidle" });
 await page.waitForFunction(() => window.__demoReady === true);
 await page.waitForTimeout(2500);
 const buttons = page.locator(".nav button");

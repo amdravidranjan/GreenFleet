@@ -4,10 +4,10 @@ import { flushSync } from "react-dom";
 import FleetMap from "./FleetMap";
 import { BlochTile } from "./Bloch";
 import { Sankey } from "./Sankey";
-import { type Demo, type Plan, CII_COLORS, act, cue, resetCues, clock, clockNow, clamp, ease, lerp, fmt, fuelColor, fuelName } from "./data";
+import { type Demo, type Plan, CII_COLORS, act, asset, cue, resetCues, clock, clockNow, clamp, ease, lerp, fmt, fuelColor, fuelName } from "./data";
 
 type SceneId = "intro" | "fleet" | "predict" | "quantum" | "pareto" | "twin" | "time" | "genealogy" | "storm" | "ask" | "outro";
-const SCENES: { id: SceneId; label: string; dur: number; marks?: Record<string, number> }[] = [
+const SCENES: { id: SceneId; label: string; dur: number; speech_at?: number; marks?: Record<string, number> }[] = [
   { id: "intro", label: "Intro", dur: 16 }, { id: "fleet", label: "Fleet today", dur: 22 },
   { id: "predict", label: "Fuel predictor", dur: 30 }, { id: "quantum", label: "Quantum engine", dur: 26 },
   { id: "pareto", label: "Trade-offs", dur: 18 }, { id: "twin", label: "Digital twin", dur: 24 },
@@ -27,11 +27,25 @@ export default function App() {
   const demo = useMemo(() => new URLSearchParams(location.search).has("demo"), []);
   const running = useRef(false);
   const demoStart = useRef(0);
+  // guided tour on the live site: same director as the video, plus the narration clips
+  const [touring, setTouring] = useState(false);
+  const voice = useRef<HTMLAudioElement | null>(null);
+  const voiceTimer = useRef(0);
+  const speak = (i: number) => {
+    window.clearTimeout(voiceTimer.current);
+    voice.current?.pause();
+    const s = timeline[i];
+    voiceTimer.current = window.setTimeout(() => {
+      voice.current = new Audio(asset(`audio/${s.id}.mp3`));
+      voice.current.play().catch(() => undefined);
+    }, (s.speech_at ?? 0.6) * 1000);
+  };
+  const stopTour = () => { window.clearTimeout(voiceTimer.current); voice.current?.pause(); setTouring(false); };
 
   useEffect(() => {
-    fetch("/demo-data.json").then((r) => r.json()).then(setD);
-    fetch("/timeline.json").then((r) => (r.ok ? r.json() : null)).then((t) => {
-      if (t?.scenes) setTimeline(SCENES.map((s) => { const x = t.scenes.find((y: any) => y.id === s.id); return { ...s, dur: x?.dur ?? s.dur, marks: x?.marks ?? {} }; }));
+    fetch(asset("demo-data.json")).then((r) => r.json()).then(setD);
+    fetch(asset("timeline.json")).then((r) => (r.ok ? r.json() : null)).then((t) => {
+      if (t?.scenes) setTimeline(SCENES.map((s) => { const x = t.scenes.find((y: any) => y.id === s.id); return { ...s, dur: x?.dur ?? s.dur, speech_at: x?.speech_at ?? 0.6, marks: x?.marks ?? {} }; }));
     }).catch(() => undefined);
   }, []);
 
@@ -65,22 +79,29 @@ export default function App() {
     const el = (now - demoStart.current) / 1000;
     for (let i = 0; i < timeline.length; i++) {
       if (el < acc + timeline[i].dur) {
-        if (i !== scene) { setScene(i); setSceneStart(demoStart.current + acc * 1000); act("scene:" + timeline[i].id); }
+        if (i !== scene) {
+          setScene(i); setSceneStart(demoStart.current + acc * 1000); act("scene:" + timeline[i].id);
+          if (touring) speak(i);
+        }
         return;
       }
       acc += timeline[i].dur;
     }
     running.current = false;
     act("demo:end");
-  }, [now, timeline, scene]);
+    if (touring) stopTour();
+  }, [now, timeline, scene, touring]);
 
   if (!d) return <div className="app" />;
   const cur = timeline[scene];
   const t = (now - sceneStart) / 1000;
   const hours = ((now - appStart.current) / 1000) * SIM_HOURS_PER_SEC;
   const Y = d.years[String(d.meta.main_year)];
-  const go = (i: number) => { running.current = false; setScene(i); setSceneStart(clockNow()); };
-  const mk = (name: string, frac: number) => cur.marks?.[name] ?? cur.dur * frac;
+  const go = (i: number) => { running.current = false; stopTour(); setScene(i); setSceneStart(clockNow()); };
+  const startTour = () => { (window as any).__startDemo(); setTouring(true); speak(0); };
+  // narration-timed marks during the tour/recording; ~3x faster when someone clicks through by hand
+  const pace = running.current ? 1 : 0.35;
+  const mk = (name: string, frac: number) => (cur.marks?.[name] ?? cur.dur * frac) * pace;
   const p = { d, t, dur: cur.dur, hours, mk };
 
   return (
@@ -93,6 +114,11 @@ export default function App() {
             <button key={s.id} className={i === scene ? "on" : ""} onClick={() => go(i)}>{s.label}</button>
           ))}
         </nav>
+        {!demo && (
+          <button className="tour" onClick={touring ? () => go(scene) : startTour}>
+            {touring ? "Stop tour" : "▶ Guided tour (4 min, sound on)"}
+          </button>
+        )}
         <div className="year">Rules of <strong>{cur.id === "time" ? Math.round(timeYear(t, mk)) : d.meta.main_year}</strong></div>
       </header>
       {cur.id === "intro" && <Intro {...p} />}
